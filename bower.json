@@ -1,0 +1,20 @@
+{
+  "name": "octotrax",
+  "version": "0.0.1",
+  "homepage": "https://github.com/marnen/octotrax",
+  "authors": [
+    "Marnen Laibow-Koser <marnen@marnen.org>"
+  ],
+  "description": "Userscript to give a BitBucket-style branch graph next to the GitHub commit history",
+  "main": "octotrax.js",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
