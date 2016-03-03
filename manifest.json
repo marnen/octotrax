@@ -5,6 +5,8 @@
   "default_locale": "en",
   "description": "A BitBucket-style branch graph in the GitHub history view!",
   "content_scripts": [
-    "matches": ["https://github.com/*/*/commits/*"]
+    {
+      "matches": ["https://github.com/*/*/commits/*"]
+    }
   ]
 }
