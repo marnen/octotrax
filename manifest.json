@@ -8,6 +8,7 @@
       "matches": ["https://github.com/*/*/commits/*"],
       "js": [
         "bower_components/gitgraph.js/src/gitgraph.js",
+        "bower_components/jquery/dist/jquery.js",
         "octotrax.js"
       ]
     }
