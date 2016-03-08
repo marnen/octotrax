@@ -9,6 +9,7 @@
       "js": [
         "bower_components/viz.js/viz.js",
         "bower_components/jquery/dist/jquery.js",
+        "bower_components/octokat/dist/octokat.js",
         "octotrax.js"
       ]
     }
