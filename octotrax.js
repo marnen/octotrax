@@ -5,21 +5,36 @@ commits.attr('data-octotrax-hash', function () {
   return this.dataset.channel.split(':').slice(-1)[0];
 });
 
+let head = commits.first();
+let headHash = head.attr('data-octotrax-hash');
+let since = commits.last().find('time').attr('datetime');
+
 let dot =
 `
 digraph "commit graph" {
   rankdir = TB;
 `
 
-var childHash;
-commits.toArray().forEach(commit => {
-  let shortHash = commit.dataset.octotraxHash.slice(0, 7);
-  if (childHash) {
-    dot += `  "${childHash}" -> "${shortHash}";\n`;
-  }
-  childHash = shortHash;
-});
-dot += '}';
+let username = $('.entry-title .author').text();
+let repo = $('.entry-title [itemprop="name"]').text();
+let octokat = new Octokat();
+octokat.repos(username, repo).commits.fetch(
+  {sha: headHash, since: since}
+).then(rawInfo => {
+  let commitInfo = {};
+  rawInfo.forEach(commit => {
+    commitInfo[commit.sha] = commit;
+  });
+  commits.toArray().forEach(commit => {
+    let hash = commit.dataset.octotraxHash;
+    let shortHash = hash.slice(0, 7);
+    dot += `  "${hash}" [label = "${shortHash}"];\n`;
+    commitInfo[hash].parents.forEach(parent => {
+      dot += `  "${hash}" -> "${parent.sha}";\n`;
+    });
+  });
+  dot += '}';
 
-let svg = $(Viz(dot)).attr({id: 'octotrax-commit-graph'});
-svg.appendTo($('body'));
+  let svg = $(Viz(dot)).attr({id: 'octotrax-commit-graph'});
+  svg.appendTo($('body'));
+});
