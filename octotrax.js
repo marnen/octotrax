@@ -1,4 +1,13 @@
 'use strict';
+let pxToIn = px => { return px / 99 };
+let hexColor = color => {
+  if (color[0] === '#') {
+    return color;
+  } else {
+    let rgb = color.match(/\d+/g).map(num => { return parseInt(num).toString(16) });
+    return `#${rgb.join('')}`;
+  }
+}
 
 let commits = $('li.commit');
 commits.attr('data-octotrax-hash', function () {
@@ -7,8 +16,7 @@ commits.attr('data-octotrax-hash', function () {
 
 let head = commits.first();
 let headHash = head.attr('data-octotrax-hash');
-
-let pxToIn = px => { return px / 99 };
+let color = hexColor(head.find('.commit-title').first().css('color'));
 let rowHeight = head.height();
 let nodeHeight = 9;
 let ranksep = rowHeight - nodeHeight;
@@ -18,8 +26,8 @@ digraph "commit graph" {
   rankdir = TB;
   ranksep = "${pxToIn(ranksep)} equally"
   splines = line;
-  edge [arrowhead = none];
-  node [shape = circle, label = "", height = "${pxToIn(nodeHeight)}"];
+  edge [arrowhead = none, color = "${color}"];
+  node [shape = circle, label = "", height = "${pxToIn(nodeHeight)}", color = "${color}"];
 `;
 
 let username = $('.entry-title .author').text();
