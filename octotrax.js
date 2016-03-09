@@ -7,7 +7,6 @@ commits.attr('data-octotrax-hash', function () {
 
 let head = commits.first();
 let headHash = head.attr('data-octotrax-hash');
-let since = commits.last().find('time').attr('datetime');
 
 let dot =
 `
@@ -19,7 +18,7 @@ let username = $('.entry-title .author').text();
 let repo = $('.entry-title [itemprop="name"]').text();
 let octokat = new Octokat();
 octokat.repos(username, repo).commits.fetch(
-  {sha: headHash, since: since}
+  {sha: headHash, per_page: commits.length}
 ).then(rawInfo => {
   let commitInfo = {};
   rawInfo.forEach(commit => {
