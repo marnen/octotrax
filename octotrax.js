@@ -1,5 +1,5 @@
 'use strict';
-let pxToIn = px => { return px / 99 };
+let pxToIn = px => { return px / 96.75 };
 let hexColor = color => {
   if (color[0] === '#') {
     return color;
