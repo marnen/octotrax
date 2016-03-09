@@ -12,7 +12,7 @@ let dot =
 `
 digraph "commit graph" {
   rankdir = TB;
-`
+`;
 
 let username = $('.entry-title .author').text();
 let repo = $('.entry-title [itemprop="name"]').text();
