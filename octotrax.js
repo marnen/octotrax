@@ -16,7 +16,7 @@ commits.attr('data-octotrax-hash', function () {
 
 let head = commits.first();
 let headHash = head.attr('data-octotrax-hash');
-let color = hexColor(head.find('.commit-title').first().css('color'));
+let color = hexColor(head.find('.commit-author').first().css('color'));
 let rowHeight = head.height();
 let nodeHeight = 9;
 let ranksep = rowHeight - nodeHeight;
