@@ -58,10 +58,8 @@ octokat.repos(username, repo).commits.fetch(
 
   let svg = $(Viz(dot));
   let svgDiv = $('<div></div>').attr({id: 'octotrax-commit-graph'}).append(svg);
-  svgDiv.css('margin-top', ((rowHeight - nodeHeight) - 2) / 2);
   let commitsListing = $('.commits-listing');
-  svgDiv.insertBefore(commitsListing);
-  commitsListing.width((_, oldWidth) => {
-    return (oldWidth - svgDiv.width()) - 1;
-  });
+  svgDiv.css('margin-top', ((rowHeight - nodeHeight) - 2) / 2);
+  svgDiv.prependTo(commitsListing);
+  svgDiv.css('left', -svgDiv.width());
 });
