@@ -12,6 +12,8 @@ let dot =
 `
 digraph "commit graph" {
   rankdir = TB;
+  splines = line;
+  node [shape = circle, label = "", height = ${6/72}];
 `;
 
 let username = $('.entry-title .author').text();
@@ -27,7 +29,6 @@ octokat.repos(username, repo).commits.fetch(
   commits.toArray().forEach(commit => {
     let hash = commit.dataset.octotraxHash;
     let shortHash = hash.slice(0, 7);
-    dot += `  "${hash}" [label = "${shortHash}"];\n`;
     commitInfo[hash].parents.forEach(parent => {
       dot += `  "${hash}" -> "${parent.sha}";\n`;
     });
