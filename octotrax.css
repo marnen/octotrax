@@ -1,0 +1,18 @@
+.commit-group {
+  margin-top: 0px !important;
+}
+.commits-listing::before, .commit-group-title {
+  display: none !important;
+}
+.commits-listing {
+  float: right;
+  padding-left: 10px !important;
+}
+.commits-listing::after {
+  clear: both,
+  display: block,
+  height: 0px;
+}
+#octotrax-commit-graph {
+  float: left;
+}
