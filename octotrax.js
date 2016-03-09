@@ -8,12 +8,18 @@ commits.attr('data-octotrax-hash', function () {
 let head = commits.first();
 let headHash = head.attr('data-octotrax-hash');
 
+let pxToIn = px => { return px / 99 };
+let rowHeight = head.height();
+let nodeHeight = 9;
+let ranksep = rowHeight - nodeHeight;
 let dot =
 `
 digraph "commit graph" {
   rankdir = TB;
+  ranksep = "${pxToIn(ranksep)} equally"
   splines = line;
-  node [shape = circle, label = "", height = ${6/72}];
+  edge [arrowhead = none];
+  node [shape = circle, label = "", height = "${pxToIn(nodeHeight)}"];
 `;
 
 let username = $('.entry-title .author').text();
@@ -37,6 +43,7 @@ octokat.repos(username, repo).commits.fetch(
 
   let svg = $(Viz(dot));
   let svgDiv = $('<div></div>').attr({id: 'octotrax-commit-graph'}).append(svg);
+  svgDiv.css('margin-top', ((rowHeight - nodeHeight) - 2) / 2);
   let commitsListing = $('.commits-listing');
   svgDiv.insertBefore(commitsListing);
   commitsListing.width((_, oldWidth) => {
