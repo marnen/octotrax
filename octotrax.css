@@ -8,10 +8,8 @@
   float: right;
   padding-left: 10px !important;
 }
-.commits-listing::after {
-  clear: both,
-  display: block,
-  height: 0px;
+.commits-listing + * {
+  clear: both;
 }
 #octotrax-commit-graph {
   float: left;
