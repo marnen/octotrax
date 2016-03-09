@@ -28,6 +28,12 @@ digraph "commit graph" {
   splines = line;
   edge [arrowhead = none, color = "${color}"];
   node [shape = circle, label = "", height = "${pxToIn(nodeHeight)}", color = "${color}"];
+
+  subgraph levels {
+    edge [style = invis];
+    node [style = invis, height = 0];
+    ${Array.from(new Array(commits.length), (_, i) => `"L${i}"`).join(' -> ')};
+  }
 `;
 
 let username = $('.entry-title .author').text();
@@ -40,12 +46,14 @@ octokat.repos(username, repo).commits.fetch(
   rawInfo.forEach(commit => {
     commitInfo[commit.sha] = commit;
   });
-  commits.toArray().forEach(commit => {
+
+  commits.toArray().forEach((commit, index) => {
     let hash = commit.dataset.octotraxHash;
     let shortHash = hash.slice(0, 7);
     commitInfo[hash].parents.forEach(parent => {
       dot += `  "${hash}" -> "${parent.sha}";\n`;
     });
+    dot += `  { rank = same; "${hash}"; "L${index}"; }\n`
   });
   dot += '}';
 
