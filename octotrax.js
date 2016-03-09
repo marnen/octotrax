@@ -25,9 +25,14 @@ let dot =
 digraph "commit graph" {
   rankdir = TB;
   ranksep = "${pxToIn(ranksep)} equally"
-  splines = line;
   edge [arrowhead = none, color = "${color}"];
   node [shape = circle, label = "", height = "${pxToIn(nodeHeight)}", color = "${color}"];
+
+  subgraph levels {
+    edge [style = invis];
+    node [style = invis, height = 0];
+    ${Array.from(new Array(commits.length), (_, i) => `"L${i}"`).join(' -> ')};
+  }
 `;
 
 let username = $('.entry-title .author').text();
@@ -40,21 +45,21 @@ octokat.repos(username, repo).commits.fetch(
   rawInfo.forEach(commit => {
     commitInfo[commit.sha] = commit;
   });
-  commits.toArray().forEach(commit => {
+
+  commits.toArray().forEach((commit, index) => {
     let hash = commit.dataset.octotraxHash;
     let shortHash = hash.slice(0, 7);
     commitInfo[hash].parents.forEach(parent => {
       dot += `  "${hash}" -> "${parent.sha}";\n`;
     });
+    dot += `  { rank = same; "${hash}"; "L${index}"; }\n`
   });
   dot += '}';
 
   let svg = $(Viz(dot));
   let svgDiv = $('<div></div>').attr({id: 'octotrax-commit-graph'}).append(svg);
-  svgDiv.css('margin-top', ((rowHeight - nodeHeight) - 2) / 2);
   let commitsListing = $('.commits-listing');
-  svgDiv.insertBefore(commitsListing);
-  commitsListing.width((_, oldWidth) => {
-    return (oldWidth - svgDiv.width()) - 1;
-  });
+  svgDiv.css('margin-top', ((rowHeight - nodeHeight) - 2) / 2);
+  svgDiv.prependTo(commitsListing);
+  svgDiv.css('left', -svgDiv.width());
 });

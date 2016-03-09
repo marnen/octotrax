@@ -5,12 +5,8 @@
   display: none !important;
 }
 .commits-listing {
-  float: right;
   padding-left: 10px !important;
 }
-.commits-listing + * {
-  clear: both;
-}
 #octotrax-commit-graph {
-  float: left;
+  position: absolute;
 }
