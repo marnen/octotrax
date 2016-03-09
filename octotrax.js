@@ -55,6 +55,6 @@ octokat.repos(username, repo).commits.fetch(
   let commitsListing = $('.commits-listing');
   svgDiv.insertBefore(commitsListing);
   commitsListing.width((_, oldWidth) => {
-    return oldWidth - svgDiv.width();
+    return (oldWidth - svgDiv.width()) - 1;
   });
 });
