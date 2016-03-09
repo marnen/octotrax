@@ -25,7 +25,6 @@ let dot =
 digraph "commit graph" {
   rankdir = TB;
   ranksep = "${pxToIn(ranksep)} equally"
-  splines = line;
   edge [arrowhead = none, color = "${color}"];
   node [shape = circle, label = "", height = "${pxToIn(nodeHeight)}", color = "${color}"];
 
