@@ -23,6 +23,7 @@ let ranksep = rowHeight - nodeHeight;
 let dot =
 `
 digraph "commit graph" {
+  ordering = out;
   rankdir = TB;
   ranksep = "${pxToIn(ranksep)} equally"
   edge [arrowhead = none, color = "${color}", penwidth = 2];
