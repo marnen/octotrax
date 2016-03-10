@@ -50,7 +50,12 @@ octokat.repos(username, repo).commits.fetch(
     let hash = commit.dataset.octotraxHash;
     let shortHash = hash.slice(0, 7);
     commitInfo[hash].parents.forEach(parent => {
-      dot += `  "${hash}" -> "${parent.sha}";\n`;
+      let edge = `  "${hash}" -> "${parent.sha}"`;
+      if (!commitInfo[parent.sha]) {
+        edge += ` [arrowhead = normal]`
+        dot += `  "${parent.sha}" [style = invis];\n`
+      }
+      dot += `  ${edge};\n`;
     });
     dot += `  { rank = same; "${hash}"; "L${index}"; }\n`
   });
