@@ -18,15 +18,15 @@ let head = commits.first();
 let headHash = head.attr('data-octotrax-hash');
 let color = hexColor(head.find('.commit-author').first().css('color'));
 let rowHeight = head.height();
-let nodeHeight = 9;
+let nodeHeight = 8;
 let ranksep = rowHeight - nodeHeight;
 let dot =
 `
 digraph "commit graph" {
   rankdir = TB;
   ranksep = "${pxToIn(ranksep)} equally"
-  edge [arrowhead = none, color = "${color}"];
-  node [shape = circle, label = "", height = "${pxToIn(nodeHeight)}", color = "${color}"];
+  edge [arrowhead = none, color = "${color}", penwidth = 2];
+  node [shape = circle, style = filled, label = "", height = "${pxToIn(nodeHeight)}", color = "${color}"];
 
   subgraph levels {
     edge [style = invis];
