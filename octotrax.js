@@ -48,8 +48,14 @@ octokat.repos(username, repo).commits.fetch(
 
   commits.toArray().forEach((commit, index) => {
     let hash = commit.dataset.octotraxHash;
-    commitInfo[hash].parents.forEach(parent => {
+    let parents = commitInfo[hash].parents;
+    let isMerge = parents.length > 1;
+
+    parents.forEach((parent, index) => {
       let edge = `  "${hash}" -> "${parent.sha}"`;
+      if (isMerge) {
+        edge += ` [weight = ${parents.length - index}]`;
+      }
       if (!commitInfo[parent.sha]) {
         edge += ` [arrowhead = normal]`
         dot += `  "${parent.sha}" [style = invis];\n`
