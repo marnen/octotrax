@@ -23,6 +23,7 @@ let ranksep = rowHeight - nodeHeight;
 let dot =
 `
 digraph "commit graph" {
+  nodesep = "0.1";
   ordering = out;
   rankdir = TB;
   ranksep = "${pxToIn(ranksep)} equally"
@@ -56,6 +57,10 @@ octokat.repos(username, repo).commits.fetch(
       let edge = `  "${hash}" -> "${parent.sha}"`;
       if (isMerge) {
         edge += ` [weight = ${parents.length - index}]`;
+        // TODO: if a merge is the first parent of another merge, make its weights even higher
+        // IDEA: for merges, weight = parents.length + commitIndex - parentIndex;
+        //       for non-merges, weight = parent.weight.
+        //       This would require keeping track of parent.weight, but might guarantee vertical lines.
       }
       if (!commitInfo[parent.sha]) {
         edge += ` [arrowhead = normal]`
