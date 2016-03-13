@@ -1,0 +1,30 @@
+{
+  "name": "octotrax",
+  "version": "0.0.1",
+  "description": "A BitBucket-style branch graph in the GitHub history view!",
+  "main": "octotrax.js",
+  "dependencies": {
+    "jquery": "^2.2.1",
+    "octokat": "^0.4.17"
+  },
+  "devDependencies": {
+    "babel-brunch": "^6.0.2",
+    "brunch": "^2.4.2",
+    "css-brunch": "^2.0.0",
+    "javascript-brunch": "^2.0.0"
+  },
+  "scripts": {
+    "start": "brunch watch --server",
+    "build": "brunch build --production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marnen/octotrax.git"
+  },
+  "author": "Marnen Laibow-Koser <marnen@marnen.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/marnen/octotrax/issues"
+  },
+  "homepage": "https://github.com/marnen/octotrax#readme"
+}

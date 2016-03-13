@@ -9,6 +9,7 @@ let hexColor = color => {
   }
 }
 
+let $ = require('jquery');
 let commits = $('li.commit');
 commits.attr('data-octotrax-hash', function () {
   return this.dataset.channel.split(':').slice(-1)[0];
@@ -39,6 +40,7 @@ digraph "commit graph" {
 
 let username = $('.entry-title .author').text();
 let repo = $('.entry-title [itemprop="name"]').text();
+let Octokat = require('octokat');
 let octokat = new Octokat();
 octokat.repos(username, repo).commits.fetch(
   {sha: headHash, per_page: commits.length}
