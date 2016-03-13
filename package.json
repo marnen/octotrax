@@ -4,9 +4,12 @@
   "description": "A BitBucket-style branch graph in the GitHub history view!",
   "main": "octotrax.js",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "brunch": "^2.4.2"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "brunch watch --server",
+    "build": "brunch build --production"
   },
   "repository": {
     "type": "git",
