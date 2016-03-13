@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "description": "A BitBucket-style branch graph in the GitHub history view!",
   "main": "octotrax.js",
-  "dependencies": {},
+  "dependencies": {
+    "jquery": "^2.2.1",
+    "octokat": "^0.4.17"
+  },
   "devDependencies": {
     "babel-brunch": "^6.0.2",
     "brunch": "^2.4.2",
