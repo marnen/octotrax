@@ -1,10 +1,10 @@
 'use strict';
-let pxToIn = px => { return px / 96.75 };
+let pxToIn = px => px / 96.75;
 let hexColor = color => {
   if (color[0] === '#') {
     return color;
   } else {
-    let rgb = color.match(/\d+/g).map(num => { return parseInt(num).toString(16) });
+    let rgb = color.match(/\d+/g).map(num => parseInt(num).toString(16));
     return `#${rgb.join('')}`;
   }
 }
