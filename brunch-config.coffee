@@ -4,3 +4,5 @@ module.exports = config:
     stylesheets: joinTo: 'octotrax.css'
   modules:
     autoRequire: 'octotrax.js': ['octotrax']
+  paths:
+    public: 'dist'
