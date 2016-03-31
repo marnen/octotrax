@@ -1,7 +1,10 @@
 {
   "esversion": 6,
+  "lastsemic": true,
   "predef": [
     "Viz",
+    "global",
+    "module",
     "require"
   ],
   "strict": "global"

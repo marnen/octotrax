@@ -1,5 +1,4 @@
 'use strict';
-let pxToIn = px => px / 96.75;
 let hexColor = color => {
   if (color[0] === '#') {
     return color;
@@ -10,6 +9,8 @@ let hexColor = color => {
 };
 
 let $ = require('jquery');
+let Graph = require('models/graph');
+
 let commits = $('li.commit');
 commits.attr('data-octotrax-hash', function () {
   return this.dataset.channel.split(':').slice(-1)[0];
@@ -20,23 +21,8 @@ let headHash = head.attr('data-octotrax-hash');
 let color = hexColor(head.find('.sha.btn').first().css('color'));
 let rowHeight = head.height();
 let nodeHeight = 8;
-let ranksep = rowHeight - nodeHeight;
-let dot =
-`
-digraph "commit graph" {
-  nodesep = "0.1";
-  ordering = out;
-  rankdir = TB;
-  ranksep = "${pxToIn(ranksep)} equally"
-  edge [arrowhead = none, color = "${color}", penwidth = 2];
-  node [shape = circle, style = filled, label = "", height = "${pxToIn(nodeHeight)}", color = "${color}"];
-
-  subgraph levels {
-    edge [style = invis];
-    node [style = invis, height = 0];
-    ${Array.from(new Array(commits.length), (_, i) => `"L${i}"`).join(' -> ')};
-  }
-`;
+let graph = new Graph(commits);
+let dot = graph.toDot({rowHeight: rowHeight, color: color});
 
 let username = $('.entry-title .author').text();
 let repo = $('.entry-title [itemprop="name"]').text();

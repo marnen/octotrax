@@ -5,7 +5,8 @@
   "main": "octotrax.js",
   "dependencies": {
     "jquery": "^2.2.1",
-    "octokat": "^0.4.17"
+    "octokat": "^0.4.17",
+    "unindent": "^2.0.0"
   },
   "devDependencies": {
     "babel-brunch": "^6.0.2",
@@ -15,7 +16,8 @@
     "css-brunch": "^2.0.0",
     "faker": "^3.0.1",
     "javascript-brunch": "^2.0.0",
-    "mocha": "^2.4.5"
+    "mocha": "^2.4.5",
+    "sha1": "^1.1.1"
   },
   "scripts": {
     "start": "brunch watch --server",
