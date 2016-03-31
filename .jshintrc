@@ -1,0 +1,8 @@
+{
+  "esversion": 6,
+  "predef": [
+    "Viz",
+    "require"
+  ],
+  "strict": "global"
+}

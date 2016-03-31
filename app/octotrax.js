@@ -7,7 +7,7 @@ let hexColor = color => {
     let rgb = color.match(/\d+/g).map(num => parseInt(num).toString(16));
     return `#${rgb.join('')}`;
   }
-}
+};
 
 let $ = require('jquery');
 let commits = $('li.commit');
@@ -65,12 +65,12 @@ octokat.repos(username, repo).commits.fetch(
         //       This would require keeping track of parent.weight, but might guarantee vertical lines.
       }
       if (!commitInfo[parent.sha]) {
-        edge += ` [arrowhead = normal]`
-        dot += `  "${parent.sha}" [style = invis];\n`
+        edge += ` [arrowhead = normal]`;
+        dot += `  "${parent.sha}" [style = invis];\n`;
       }
       dot += `  ${edge};\n`;
     });
-    dot += `  { rank = same; "${hash}"; "L${index}"; }\n`
+    dot += `  { rank = same; "${hash}"; "L${index}"; }\n`;
   });
   dot += '}';
 
