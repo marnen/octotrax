@@ -1,7 +1,7 @@
 Graph = require '../app/models/graph'
 Commit = require '../app/models/commit' # TODO: can we stub more of this?
 randomCommits = (count = Faker.random.arrayElement([2..5])) ->
-  for _ in [1..count]
+  for [1..count]
     randomCommit()
 randomParent = -> {sha: randomHash()}
 commitInfo = (commits = randomCommits(1)) ->
@@ -98,7 +98,7 @@ describe 'Graph', ->
               """
         context 'merge commit', ->
           beforeEach ->
-            for _ in [1..2]
+            for [1..2]
               @parents.push randomParent()
           it 'weights each edge based on the order of the parent commit', ->
             for parent, index in @parents
