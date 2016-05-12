@@ -25,8 +25,10 @@ describe 'Graph', ->
       @commitInfo = commitInfo @commits
       @graph = -> new Graph @commits, info: @commitInfo
     describe '#commits', ->
-      it 'returns the commits that the graph was initialized with', ->
-        expect(@graph().commits).to.deep.equal @commits
+      it 'returns Commit objects made from the commits that the graph was initialized with', ->
+        Commit = require '../app/models/commit'
+        commitObjects = (new Commit(commit) for commit in @commits)
+        expect(@graph().commits).to.deep.equal commitObjects
     describe '#toDot', ->
       beforeEach ->
         @defaultOptions =

@@ -27,6 +27,7 @@ octokat.repos(username, repo).commits.fetch(
 ).then(rawInfo => {
   let commitInfo = {};
   rawInfo.forEach(commit => {
+    // TODO: make this a Commit class property
     commitInfo[commit.sha] = commit;
   });
 

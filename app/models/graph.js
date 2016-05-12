@@ -2,13 +2,15 @@
 
 let unindent = require('unindent');
 
+let Commit = require('./commit');
+
 let _commits = new WeakMap();
 let _commitInfo = new WeakMap();
 
 module.exports = class Graph {
   constructor(commits, {info}) {
     let commitsArray = commits.toArray ? commits.toArray() : commits;
-    _commits.set(this, commitsArray);
+    _commits.set(this, commitsArray.map(commit => new Commit(commit)));
     _commitInfo.set(this, info);
   }
 
@@ -36,13 +38,13 @@ module.exports = class Graph {
     `, {trim: true}) + '\n';
 
     this.commits.forEach((commit, index) => {
-      let hash = commit.dataset.octotraxHash;
+      let sha = commit.sha;
       let commitInfo = _commitInfo.get(this);
-      let parents = commitInfo[hash].parents;
+      let parents = commitInfo[sha].parents;
       let isMerge = parents.length > 1;
 
       parents.forEach((parent, index) => {
-        let edge = `  "${hash}" -> "${parent.sha}"`;
+        let edge = `  "${sha}" -> "${parent.sha}"`;
         if (isMerge) {
           edge += ` [weight = ${parents.length - index}]`;
           // TODO: if a merge is the first parent of another merge, make its weights even higher
@@ -56,7 +58,7 @@ module.exports = class Graph {
         }
         dot += `  ${edge};\n`;
       });
-      dot += `  { rank = same; "${hash}"; "L${index}"; }\n`;
+      dot += `  { rank = same; "${sha}"; "L${index}"; }\n`;
     });
 
     dot += '}\n';
