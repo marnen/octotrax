@@ -42,8 +42,7 @@ module.exports = class Graph {
     `, {trim: true}) + '\n';
 
     this.commits.forEach((commit, index) => {
-      let sha = commit.sha;
-      let parents = Commit.find(sha).parents;
+      let {sha, parents} = commit;
       let isMerge = parents.length > 1;
 
       parents.forEach((parent, index) => {
