@@ -42,6 +42,7 @@ module.exports = class Graph {
     `, {trim: true}) + '\n';
 
     this.commits.forEach((commit, index) => {
+      // TODO: move this whole block into Commit class
       let {sha, parents} = commit;
       parents.forEach((parent, index) => {
         let edge = `  "${sha}" -> "${parent.sha}"`;
