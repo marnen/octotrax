@@ -1,4 +1,5 @@
 Graph = require '../app/models/graph'
+Commit = require '../app/models/commit' # TODO: can we stub more of this?
 randomCommits = (count = Faker.random.arrayElement([2..5])) ->
   for _ in [1..count]
     randomCommit()
@@ -26,9 +27,11 @@ describe 'Graph', ->
       @graph = -> new Graph @commits, info: @commitInfo
     describe '#commits', ->
       it 'returns Commit objects made from the commits that the graph was initialized with', ->
-        Commit = require '../app/models/commit'
         commitObjects = (new Commit(commit) for commit in @commits)
         expect(@graph().commits).to.deep.equal commitObjects
+      it 'puts parentage info from the info hash into the appropriate Commit objects', ->
+        for commit in @graph().commits
+          expect(commit.parents).to.deep.equal @commitInfo[commit.sha].parents
     describe '#toDot', ->
       beforeEach ->
         @defaultOptions =
@@ -82,12 +85,12 @@ describe 'Graph', ->
             @normalArrowhead = ///
                "#{@hash}"\ ->\ "#{@parent.sha}".*\[arrowhead\ =\ normal\]
             ///
-          context 'in commit hash', ->
+          context 'Commit object exists', ->
             beforeEach ->
+              new Commit dataset: octotraxHash: @parent.sha
             it 'uses a normal node for the parent', ->
-              @commitInfo[@parent.sha] = 'dummy data'
               expect(@dot()).not.to.match @normalArrowhead
-          context 'not in commit hash', ->
+          context 'Commit object does not exist', ->
             it 'uses an arrowhead for the parent node', ->
               expect(@dot()).to.match @normalArrowhead
               expect(@dot()).to.contain """

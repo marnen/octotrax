@@ -5,13 +5,17 @@ let unindent = require('unindent');
 let Commit = require('./commit');
 
 let _commits = new WeakMap();
-let _commitInfo = new WeakMap();
 
 module.exports = class Graph {
   constructor(commits, {info}) {
     let commitsArray = commits.toArray ? commits.toArray() : commits;
     _commits.set(this, commitsArray.map(commit => new Commit(commit)));
-    _commitInfo.set(this, info);
+    Object.keys(info).forEach((sha) => {
+      let commit = Commit.find(sha);
+      if (commit) {
+        commit.parents = info[sha].parents;
+      }
+    });
   }
 
   get commits() { return _commits.get(this) }
@@ -39,8 +43,7 @@ module.exports = class Graph {
 
     this.commits.forEach((commit, index) => {
       let sha = commit.sha;
-      let commitInfo = _commitInfo.get(this);
-      let parents = commitInfo[sha].parents;
+      let parents = Commit.find(sha).parents;
       let isMerge = parents.length > 1;
 
       parents.forEach((parent, index) => {
@@ -52,7 +55,7 @@ module.exports = class Graph {
           //       for non-merges, weight = parent.weight.
           //       This would require keeping track of parent.weight, but might guarantee vertical lines.
         }
-        if (!commitInfo[parent.sha]) {
+        if (!Commit.find(parent.sha)) {
           edge += ` [arrowhead = normal]`;
           dot += `  "${parent.sha}" [style = invis];\n`;
         }
