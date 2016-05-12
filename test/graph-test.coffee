@@ -1,10 +1,7 @@
 Graph = require '../app/models/graph'
-Faker = require 'faker'
-SHA1 = require 'sha1'
-randomHash = -> SHA1(Faker.random.number 1000)
 randomCommits = (count = Faker.random.arrayElement([2..5])) ->
   for _ in [1..count]
-    dataset: octotraxHash: randomHash()
+    randomCommit()
 randomParent = -> {sha: randomHash()}
 commitInfo = (commits = randomCommits(1)) ->
   results = {}
