@@ -43,11 +43,9 @@ module.exports = class Graph {
 
     this.commits.forEach((commit, index) => {
       let {sha, parents} = commit;
-      let isMerge = parents.length > 1;
-
       parents.forEach((parent, index) => {
         let edge = `  "${sha}" -> "${parent.sha}"`;
-        if (isMerge) {
+        if (commit.isMerge()) {
           edge += ` [weight = ${parents.length - index}]`;
           // TODO: if a merge is the first parent of another merge, make its weights even higher
           // IDEA: for merges, weight = parents.length + commitIndex - parentIndex;

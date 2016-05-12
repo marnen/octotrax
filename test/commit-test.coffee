@@ -1,4 +1,5 @@
 Commit = require '../app/models/commit'
+randomParent = -> {sha: randomHash()}
 
 describe 'Commit', ->
   describe 'constructor', ->
@@ -14,11 +15,31 @@ describe 'Commit', ->
         expect(Commit.find @sha).to.equal @commit
       it "returns undefined if there's no commit to find", ->
         expect(Commit.find randomHash()).to.be.undefined
+    describe '#isMerge', ->
+      beforeEach ->
+        @subject = -> @commit.isMerge()
+      context 'no parents', ->
+        beforeEach ->
+          @commit.parents = []
+        it 'returns false', ->
+          expect(@subject()).to.be.false
+      context 'one parent', ->
+        beforeEach ->
+          @commit.parents = [randomParent()]
+        it 'returns false', ->
+          expect(@subject()).to.be.false
+      context 'more than one parent', ->
+        beforeEach ->
+          count = Faker.random.arrayElement [2..5]
+          @commit.parents = (randomParent() for [1..count])
+        it 'returns true', ->
+          expect(@subject()).to.be.true
+
     describe '#parents', ->
       it 'returns an empty array by default', ->
         expect(@commit.parents).to.deep.equal []
       it 'is assignable', ->
-        parents = ({sha: randomHash()} for [1..5])
+        parents = (randomParent() for [1..5])
         @commit.parents = parents
         expect(@commit.parents).to.deep.equal parents
     describe '#sha', ->
