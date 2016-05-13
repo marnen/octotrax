@@ -1,17 +1,17 @@
 'use strict';
 
-let _allCommits = {};
+let allCommits = {};
 let _parents = new WeakMap();
 let _sha = new WeakMap();
 
 module.exports = class Commit {
   constructor({dataset: {octotraxHash: sha}}) {
     _sha.set(this, sha);
-    _allCommits[sha] = this;
+    allCommits[sha] = this;
   }
 
   static find(sha) {
-    return _allCommits[sha];
+    return allCommits[sha];
   }
 
   isMerge() {
