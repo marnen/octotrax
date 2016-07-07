@@ -36,8 +36,7 @@ digraph "commit graph" {
   }
 `;
 
-let username = $('.entry-title .author').text();
-let repo = $('.entry-title [itemprop="name"]').text();
+const [_, username, repo] = window.location.pathname.split('/');
 let Octokat = require('octokat');
 let octokat = new Octokat();
 octokat.repos(username, repo).commits.fetch(
