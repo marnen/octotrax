@@ -14,6 +14,7 @@
     "javascript-brunch": "^2.0.0"
   },
   "scripts": {
+    "install": "npm-git-install",
     "start": "brunch watch --server",
     "build": "brunch build --production"
   },
