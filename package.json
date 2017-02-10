@@ -13,6 +13,11 @@
     "css-brunch": "^2.0.0",
     "javascript-brunch": "^2.0.0"
   },
+  "gitDependencies": {
+    "octokat": "https://github.com/philschatz/octokat.js/pull/104",
+    "octokat": "https://github.com/divdavem/octokat.js.git#patch-1",
+    "octokat": "https://github.com/marnen/octokat.js.git#prepublish"
+  },
   "scripts": {
     "install": "npm-git-install",
     "start": "brunch watch --server",
